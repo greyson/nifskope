@@ -687,8 +687,8 @@ void DirectDrawSurface::mipmap( Image * img, uint face, uint mipmap )
 
 	// Compute width and height.
 	for ( uint m = 0; m < mipmap; m++ ) {
-		w = max( 1U, w / 2 );
-		h = max( 1U, h / 2 );
+		w = std::max( 1U, w / 2 );
+		h = std::max( 1U, h / 2 );
 	}
 
 	img->allocate( w, h );
@@ -774,8 +774,8 @@ void DirectDrawSurface::readBlockImage( Image * img )
 			readBlock( &block );
 
 			// Write color block.
-			for ( uint y = 0; y < min( 4U, h - 4 * by ); y++ ) {
-				for ( uint x = 0; x < min( 4U, w - 4 * bx ); x++ ) {
+			for ( uint y = 0; y < std::min( 4U, h - 4 * by ); y++ ) {
+				for ( uint x = 0; x < std::min( 4U, w - 4 * bx ); x++ ) {
 					img->pixel( 4 * bx + x, 4 * by + y ) = block.color( x, y );
 				}
 			}
@@ -880,9 +880,9 @@ uint DirectDrawSurface::mipmapSize( uint mipmap ) const
 	uint d = depth();
 
 	for ( uint m = 0; m < mipmap; m++ ) {
-		w = max( 1U, w / 2 );
-		h = max( 1U, h / 2 );
-		d = max( 1U, d / 2 );
+		w = std::max( 1U, w / 2 );
+		h = std::max( 1U, h / 2 );
+		d = std::max( 1U, d / 2 );
 	}
 
 	if ( header.pf.flags & DDPF_FOURCC ) {
